@@ -15,8 +15,8 @@ var mailer = {
 			var fileName = 'Target-audience.xlsx';
 			var mailOptions = {
 			  from: 'hexatestmailer@gmail.com',
-			  //to: 'arjunbhexaware@gmail.com',
-			  to:'wilfredf@hexaware.com,saisub@hexaware.com,omprakashr@hexaware.com,arjunb@hexaware.com',
+			  to: 'arjunbhexaware@gmail.com',
+			  //to:'wilfredf@hexaware.com,saisub@hexaware.com,omprakashr@hexaware.com,arjunb@hexaware.com',
 			  subject:'Target Audience',
 			  html: 'Hi ,<div>Greetings from <b>TTC</b>!!</div><div style="margin-top:8px"> Please find attached the target audience for your area</div><div style="margin-top:8px">Regards,</div><div>TTC Team</div>',
 			  attachments:[
