@@ -126,7 +126,7 @@ alexaApp.intent('EmailConfirmIntent', function (request, response) {
         console.log('packageEmailTriggered'+packageEmailTriggered+'&&prospectiveEmailTriggered'+prospectiveEmailTriggered)
         packageEmailTriggered = true;
         return mailer.mailPackageDetails().then((result)=>{
-            var say = ["<s>Email sent</s><s>Also,<break strength=\"medium\" /> Trafalgar wants to share prospective list with you.  Do you want me to email it to you?</s>"];
+            var say = ["<s>Email sent</s><s>Also,<break strength=\"medium\" /> Trafalgar wants to share prospective list with you.<break strength=\"medium\" />  Do you want me to email it to you?</s>"];
             console.log('after call',say);
              response.shouldEndSession(false);
              response.say(say.join('\n'));
