@@ -123,6 +123,7 @@ alexaApp.intent('PriceRangeIntent', function (request, response) {
 
 alexaApp.intent('EmailConfirmIntent', function (request, response) {
     if(!packageEmailTriggered && !prospectiveEmailTriggered){
+        console.log('packageEmailTriggered'+packageEmailTriggered+'&&prospectiveEmailTriggered'+prospectiveEmailTriggered)
         packageEmailTriggered =true;
         return mailer.mailPackageDetails().then((result)=>{
             var say = ["<s>Email sent</s><s>Also,<break strength=\"medium\" /> Trafalgar wants to share prospective list with you.  Do you want me to email it to you?</s>"];
@@ -162,63 +163,6 @@ alexaApp.intent('EmailCancelIntent', function (request, response) {
     var say = ['<s>okay<break strength=\"medium\" />you can get them later</s>'];        
     console.log("priceRange is"+priceRange+"  Speech output: " + say);     
     response.shouldEndSession(false);
-    response.say(say.join('\n'));
-    resetAll();
-});
-
-alexaApp.intent('rentalConfirmIntent', function (request, response) {
-    var all = JSON.parse(request.session('all') || '{}');
-    var say = ["<s> As per your policy, you are eligible for 30 days rental car service not exceeding $35 a day.</s>"];
-    say.push('<s> Can you let me know the start date of the rental car service?</s>');
-    response.shouldEndSession(false);
-    response.say(say.join('\n'));
-});
-
-alexaApp.intent('rentalCancelIntent', function (request, response) {
-    var all = JSON.parse(request.session('all') || '{}');
-    var say =["<s> Okay,But you can book a rental car later!</s>"];
-    response.shouldEndSession(true);
-    response.say(say.join('\n'));
-    resetAll();
-});
-
-alexaApp.intent('rentalDetailsIntent', function (request, response) {
-    var all = JSON.parse(request.session('all') || '{}');
-    var say =[];
-    console.log(request.data.request.intent.slots);
-    if (request.data.request.intent.slots.startDate.value && rentalStartDate =='' ){
-        rentalStartDate = request.data.request.intent.slots.startDate.value;
-        console.log(rentalStartDate);
-        say =["<s> Can you tell me for how many days you would require the rental car service?</s>"];
-    }
-    if(rentalStartDate==''){
-        say =["<s> Can you let me know the start date of the rental car service?</s>"];
-    }
-    if(request.data.request.intent.slots.days.value && rentalDays ==''){
-        rentalDays = request.data.request.intent.slots.days.value;
-        return helper.getRentalConfirmation(claimId,rentalStartDate,rentalDays).then((result)=>{            
-            say = result;
-            console.log('after call',say);
-            response.shouldEndSession(false);
-            response.say(say.join('\n'));         
-        }).catch((err)=>{
-            say = ["<s> Something went wrong while processing your request.</s><s>Please try again</s>"];
-            response.shouldEndSession(true);
-            response.say(say.join('\n'));				
-        })
-    }
-    if(rentalDays==''){
-        say =["<s> Can you tell me for how many days you would require the rental car service?</s>"];
-    }
-   // var say =["<s> Happy to help you!</s>"];
-    response.shouldEndSession(false);
-    response.say(say.join('\n'));
-});
-
-alexaApp.intent('GermanWelcomeIntent', function (request, response) {
-    var all = JSON.parse(request.session('all') || '{}');
-    var say =["<s> Willkommen beim Politikassistenten.</s><s>Was kann ich für Dich tun</s>"];
-    response.shouldEndSession(true);
     response.say(say.join('\n'));
     resetAll();
 });
