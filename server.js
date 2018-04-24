@@ -127,8 +127,9 @@ alexaApp.intent('EmailConfirmIntent', function (request, response) {
         return mailer.mailPackageDetails().then((result)=>{
             var say = ["<s>Email sent</s><s>Also,<break strength=\"medium\" /> Trafalgar wants to share prospective list with you.  Do you want me to email it to you?</s>"];
             console.log('after call',say);
-             response.shouldEndSession(true);
+             response.shouldEndSession(false);
              response.say(say.join('\n'));
+             resetAll();
      
          }).catch((err)=>{
              say = ["<s> Something went wrong while processing your request.</s><s>Please try again</s>"];
@@ -162,6 +163,7 @@ alexaApp.intent('EmailCancelIntent', function (request, response) {
     console.log("priceRange is"+priceRange+"  Speech output: " + say);     
     response.shouldEndSession(false);
     response.say(say.join('\n'));
+    resetAll();
 });
 
 alexaApp.intent('rentalConfirmIntent', function (request, response) {
