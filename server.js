@@ -26,6 +26,8 @@ var travelMonth = '';
 var tripLengthStart = '';
 var tripLengthEnd = '';
 var priceRange = '';
+var packageEmailTriggered = false;
+var prospectiveEmailTriggered = false;
 
 
 //Simple card
@@ -120,17 +122,39 @@ alexaApp.intent('PriceRangeIntent', function (request, response) {
 });
 
 alexaApp.intent('EmailConfirmIntent', function (request, response) {
-    return mailer.mailPackageDetails().then((result)=>{
-       var say = ["<s>Email sent</s><s>Glad to be of help!</s>"];
-       console.log('after call',say);
-        response.shouldEndSession(true);
-        response.say(say.join('\n'));
-
-    }).catch((err)=>{
-        say = ["<s> Something went wrong while processing your request.</s><s>Please try again</s>"];
-        response.shouldEndSession(true);
-        response.say(say.join('\n'));				
-})      
+    if(!packageEmailTriggered && !prospectiveEmailTriggered){
+        packageEmailTriggered =true;
+        return mailer.mailPackageDetails().then((result)=>{
+            var say = ["<s>Email sent</s><s>Also,<break strength=\"medium\" /> Trafalgar wants to share prospective list with you.  Do you want me to email it to you?</s>"];
+            console.log('after call',say);
+             response.shouldEndSession(true);
+             response.say(say.join('\n'));
+     
+         }).catch((err)=>{
+             say = ["<s> Something went wrong while processing your request.</s><s>Please try again</s>"];
+             response.shouldEndSession(true);
+             response.say(say.join('\n'));				
+     })     
+    };
+    if(packageEmailTriggered && !prospectiveEmailTriggered){
+        prospectiveEmailTriggered = true;
+        var say = ["<s>second Email sent</s>"];
+        console.log('after call',say);
+         response.shouldEndSession(true);
+         response.say(say.join('\n'));
+        /*return mailer.mailPackageDetails().then((result)=>{
+            var say = ["<s>Email sent</s><s>Glad to be of help!</s>"];
+            console.log('after call',say);
+             response.shouldEndSession(true);
+             response.say(say.join('\n'));
+     
+         }).catch((err)=>{
+             say = ["<s> Something went wrong while processing your request.</s><s>Please try again</s>"];
+             response.shouldEndSession(true);
+             response.say(say.join('\n'));				
+     }) */
+    }
+         
 });
 
 alexaApp.intent('EmailCancelIntent', function (request, response) {
@@ -244,7 +268,9 @@ function resetAll(){
     travelMonth = '';
     tripLengthStart = '';
     tripLengthEnd = '';
-    priceRange = ''
+    priceRange = '';
+    packageEmailTriggered = false;
+    prospectiveEmailTriggered = false;
 }
 
 alexaApp.intent('repairPaymentDetailsIntent', function (request, response) {
