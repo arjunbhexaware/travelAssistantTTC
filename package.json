@@ -1,0 +1,19 @@
+{
+  "name": "TravelAssistant",
+  "version": "1.0.0",
+  "description": "An Alexa POC TTC",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "Hari Krishnan V",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "request": "^2.83.0",
+    "alexa-sdk": "^1.0.0",
+    "alexa-app": "^3.1.0",
+    "nodemailer": "^4.6.4"
+  }
+}
