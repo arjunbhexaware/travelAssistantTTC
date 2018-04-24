@@ -122,7 +122,7 @@ alexaApp.intent('PriceRangeIntent', function (request, response) {
 });
 
 alexaApp.intent('EmailConfirmIntent', function (request, response) {
-    if(!packageEmailTriggered && !prospectiveEmailTriggered){
+    if(packageEmailTriggered == false && !prospectiveEmailTriggered){
         console.log('packageEmailTriggered'+packageEmailTriggered+'&&prospectiveEmailTriggered'+prospectiveEmailTriggered)
         packageEmailTriggered = true;
         return mailer.mailPackageDetails().then((result)=>{
