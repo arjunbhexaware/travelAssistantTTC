@@ -138,11 +138,21 @@ alexaApp.intent('EmailConfirmIntent', function (request, response) {
     };
     if(packageEmailTriggered && !prospectiveEmailTriggered){
         prospectiveEmailTriggered = true;
-        var say = ["<s>second Email sent</s>"];
+        return mailer.mailTargetAudience().then((result)=>{
+            var say = ["<s>Email sent</s><s>Glad to be of help!</s>"];
+            console.log('after call',say);
+             response.shouldEndSession(true);
+             response.say(say.join('\n'));
+         }).catch((err)=>{
+             say = ["<s> Something went wrong while processing your request.</s><s>Please try again</s>"];
+             response.shouldEndSession(true);
+             response.say(say.join('\n'));				
+     })
+     /*var say = ["<s>second Email sent</s>"];
         console.log('after call',say);
          response.shouldEndSession(true);
          response.say(say.join('\n'));
-        /*return mailer.mailPackageDetails().then((result)=>{
+        return mailer.mailPackageDetails().then((result)=>{
             var say = ["<s>Email sent</s><s>Glad to be of help!</s>"];
             console.log('after call',say);
              response.shouldEndSession(true);
