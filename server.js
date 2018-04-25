@@ -170,7 +170,7 @@ alexaApp.intent('EmailConfirmIntent', function (request, response) {
 alexaApp.intent('EmailCancelIntent', function (request, response) {
     var say = ['<s>okay<break strength=\"medium\" />you can get them later</s>'];        
     console.log("priceRange is"+priceRange+"  Speech output: " + say);     
-    response.shouldEndSession(false);
+    response.shouldEndSession(true);
     response.say(say.join('\n'));
     resetAll();
 });
